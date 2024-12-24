@@ -160,10 +160,10 @@ async function run(env, body, fs, core) {
     core.setOutput(`issueparser_${key}`, Array.isArray(value) ? value.join(',') : value);
   })
 
-  console.log(result);
   const matrixValues = {};
   Object.entries(result).filter(([, val]) => !Array.isArray(val)).forEach(([key, val]) => Object.assign(matrixValues, { [key]: val }));
   const matrix = Object.entries(result).filter(([, arr]) => Array.isArray(arr)).map(([key, arr]) => arr.map(value => ({ ...matrixValues, [key]: value }))).map(([,arr]) => arr)[0];
+  console.log(matrix);
   core.setOutput(`issueparser_matrix`, { include: matrix });
 
   function jsonStringify(json) {
